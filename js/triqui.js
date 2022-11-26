@@ -1,27 +1,19 @@
-/* ===============================
-Design & Code ~ Eduardo Mihalache
-TicTacToe Game
-Vanilla JS & Canvas
-GitHub: https://github.com/Eduwardo/Tic-Tac-Toe-Canvas
-==================================*/
-
 function init() {
-	// remove preloadFont
-	// get canvas
-	const canvas = document.getElementById('TicTacToe');
+	// Canvas
+	const canvas = document.getElementById('triqui');
 	canvas.height = 330;
 	canvas.width = 330;
 	const ctx = canvas.getContext('2d');
   canvas.style.visibility = 'visible';
 	// space between innerWindow and canvas
-	let rect = document.getElementById('TicTacToe').getBoundingClientRect();
+	let rect = document.getElementById('Triqui').getBoundingClientRect();
 	// resize window
 	window.addEventListener('resize', () => {
-		rect = document.getElementById('TicTacToe').getBoundingClientRect();
+		rect = document.getElementById('Triqui').getBoundingClientRect();
 	});
 	// mouse events & styles
 	const mouse = {x: 0, y: 0};
-	let cursor = document.getElementById("TicTacToe");
+	let cursor = document.getElementById("Triqui");
 	// mouse events
 	document.addEventListener('mousemove', (event) => callCheckEvent(event, 'hover'));
 	document.addEventListener('click', (event) => callCheckEvent(event, 'click'));
@@ -66,7 +58,7 @@ function init() {
 
 	/*========================= Game ==========================*/
 
-	function TicTacToe() {
+	function Triqui() {
 		// == private drawing variables ==
 		let cellSize = 110;
 		let centerWidth = canvas.width / 2;
@@ -797,7 +789,7 @@ function init() {
 		}
 	}
 
-	let game = new TicTacToe();
+	let game = new triqui();
 	game.intro();
 }
 // preload fonts
