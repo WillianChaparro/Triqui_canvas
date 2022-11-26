@@ -1,17 +1,17 @@
 function init() {
-	// Canvas
+	// Inicio Canvas
 	const canvas = document.getElementById('triqui');
 	canvas.height = 330;
 	canvas.width = 330;
 	const ctx = canvas.getContext('2d');
   canvas.style.visibility = 'visible';
-	// space between innerWindow and canvas
+	// Espacio entre ventanas
 	let rect = document.getElementById('Triqui').getBoundingClientRect();
-	// resize window
+	// resize ventana
 	window.addEventListener('resize', () => {
 		rect = document.getElementById('Triqui').getBoundingClientRect();
 	});
-	// mouse events & styles
+	// eventos
 	const mouse = {x: 0, y: 0};
 	let cursor = document.getElementById("Triqui");
 	// mouse events
@@ -27,15 +27,8 @@ function init() {
 			game.checkEvent(mouse, message);
 		}
 	};
-	// audio theme
-	const soundtrack = {
-		changeScreen: new Audio(soundtrack_176666238),
-		gameStarted: new Audio(soundtrack_114248243),
-		playerX: new Audio(soundtrack_227830187),
-		playerO: new Audio(soundtrack_227830190)
-	}
 
-	/*========================= Table Settings ==========================*/
+	/*========================= Tablero ==========================*/
 
 	let map = [
 		0, 0, 0,
@@ -49,14 +42,14 @@ function init() {
 		[ 0 , 4 , 8 ], [ 2 , 4 , 6 ]
 	];
 
-	/*========================= Init Settings ==========================*/
+	/*========================= Inicio ==========================*/
 
 	let X = 1, O = -1;
 	let player;
 	let playerOne, playerTwo, AI;
 	let score = {playerOne: 0, playerTwo: 0, AI: 0};
 
-	/*========================= Game ==========================*/
+	/*========================= juego ==========================*/
 
 	function Triqui() {
 		// == private drawing variables ==
@@ -106,7 +99,6 @@ function init() {
 						// go to Choose Player screen
 						this.isIntro = false;
 						if (!this.isChoosePlayer) {
-							this.playSound('changeScreen');
 							setTimeout(() => {
 								this.isChoosePlayer = true;
 								this.choosePlayer();
@@ -139,7 +131,6 @@ function init() {
 						playerOne = X;
 						playerTwo = playerOne === X ? O : X;
 						if (!this.isChoosePlayer) {
-							this.playSound('changeScreen');
 							setTimeout(() => {
 								this.isChooseMode = true;
 								this.chooseMode();
@@ -152,7 +143,6 @@ function init() {
 						playerOne = O;
 						playerTwo = playerOne === O ? X : O;
 						if (!this.isChoosePlayer) {
-							this.playSound('changeScreen');
 							setTimeout(() => {
 								this.isChooseMode = true;
 								this.chooseMode();
@@ -186,7 +176,6 @@ function init() {
 						// set AI as second player
 						AI = playerTwo;
 						if (!this.isGameStart) {
-							this.playSound('gameStarted', 200);
 							setTimeout(() => {
 								if (this.firstTurn) {
 									this.whoStart();
@@ -199,7 +188,6 @@ function init() {
 						this.isChooseMode = false;
 						this.mode = 'multiPlayer';
 						if (!this.isGameStart) {
-							this.playSound('gameStarted', 200);
 							setTimeout(() => {
 								if (this.firstTurn) {
 									this.whoStart();
@@ -242,7 +230,7 @@ function init() {
 			}
 		};
 
-		/*========================== Game core Logic ==========================*/
+		/*========================== Logica de juego ==========================*/
 
 		this.whoStart = () => {
 			if (this.mode === 'singlePlayer') {
@@ -282,7 +270,6 @@ function init() {
 
 		this.playTurn = () => {
 			if (this.mode === 'multiPlayer') {
-				this.playPlayerMoveSound();
 				if (this.turn === playerOne) {
 					this.playerOne();
 				}
@@ -292,7 +279,6 @@ function init() {
 			}
 			else if (this.mode === 'singlePlayer') {
 				if (this.turn === playerOne && this.isGameStart) {
-					this.playPlayerMoveSound();
 					this.playerOne();
 					if (this.turn === AI && this.isGameStart) {
 						setTimeout(()=> {
@@ -303,7 +289,6 @@ function init() {
 				} else if (this.turn === AI && this.isGameStart && this.firstTurn) {
 					this.firstTurn = false;
 					setTimeout(()=> {
-						this.playPlayerMoveSound();
 						this.computerPlay();
 					}, 400);
 				}
@@ -434,7 +419,7 @@ function init() {
 			}
 		};
 
-		/*========================== Game Results Scenario ==========================*/
+		/*========================== Valida Juego ==========================*/
 
 		this.gameResults = (message) => {
 			this.drawBackground();
@@ -493,8 +478,8 @@ function init() {
 		};
 
 		this.drawScores = () => {
-			let playerOneName = (this.mode === 'singlePlayer') ? 'YOU' : 'PLAYER 1';
-			let playerTwoName = (this.mode === 'singlePlayer') ? 'COMPUTER' : 'PLAYER 2';
+			let playerOneName = (this.mode === 'singlePlayer') ? 'TU' : 'PLAYER 1';
+			let playerTwoName = (this.mode === 'singlePlayer') ? 'COMPUTADOR' : 'PLAYER 2';
 			let playerOneScore = score.playerOne;
 			let playerTwoScore = (this.mode === 'singlePlayer') ? score.AI : score.playerTwo;
 			this.drawText(centerWidth, marginTop + 60, '#8e5be6', "#d8b4ff", 12, 'bold', '20px', 'Audiowide', 'SCORE');
@@ -562,7 +547,7 @@ function init() {
 			this.drawText(canvas.width - 105, canvas.height - 72, '#fff', "#7c65e0", 12, 'normal', '22px', 'Audiowide', 'Next');
 		};
 
-		/*========================== Intro Scenario ==========================*/
+		/*========================== Intro ==========================*/
 
 		this.intro = () => {
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -600,7 +585,7 @@ function init() {
 			ctx.restore();
 		};
 
-		/*========================== Choose player symbol  Scenario ==========================*/
+		/*========================== Seleccion de la ficha ==========================*/
 
 		this.choosePlayer = () => {
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -695,7 +680,7 @@ function init() {
 			ctx.stroke();
 		};
 
-		/*========================== Standard drawing functions ==========================*/
+		/*========================== FUncion para dibujar ==========================*/
 
 		this.drawText = (x, y, color, colorBlur, sizeBlur, fontWeight, fontSize, fontType, text) => {
 			ctx.save();
@@ -739,7 +724,7 @@ function init() {
 			ctx.fillRect(0,0, canvas.width, canvas.height);
 		};
 
-		/*========================== Get cells ==========================*/
+		/*========================== Obtener celda ==========================*/
 
 		this.getCell = (cell) => {
 			return {x: (cell % 3) * cellSize, y: Math.floor(cell / 3) * cellSize};
@@ -751,10 +736,6 @@ function init() {
 
 		/*========================== Set sound ==========================*/
 
-		this.playPlayerMoveSound = () => {
-			player === X ? this.playSound('playerX') : this.playSound('playerO');
-		}
-		
 		this.playSound = (type, ms = 100) => {
 			setTimeout(() => {
 				
